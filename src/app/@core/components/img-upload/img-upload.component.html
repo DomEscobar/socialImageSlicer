@@ -1,0 +1,37 @@
+<div (click)="fileInput.click()">
+    <ng-content></ng-content>
+</div>
+<input hidden type="file" multiple #fileInput (change)="handleUpload($event)">
+
+<ng-container *ngIf="uploadState$ | async as state">
+    <ng-container *ngIf="state != uploadStates.DEFAULT">
+        <div class="modal-background">
+            <div class="modal-content">
+
+                <ng-container *ngIf="state == uploadStates.ERROR; else previewImages">
+                    <p class="error-text flip-in"> {{uploadError}}</p>
+                    <button (click)="setState(uploadStates.DEFAULT)">Ok</button>
+                </ng-container>
+
+
+                <ng-template #previewImages>
+                    <ng-container *ngIf="state == uploadStates.FINISH;else loading">
+                        <p class="success-text flip-in" translate>Successfull loaded, please wait.</p>
+                    </ng-container>
+
+                    <ng-template #loading>
+                        <p class="loading-text">
+                            Loading images...
+                        </p>
+                    </ng-template>
+
+                    <div class="preview-item flip-in" *ngFor="let file of uploadFiles$ | async">
+                        <img [src]=file.base64 />
+                        <p>{{file.name}}</p>
+                    </div>
+                </ng-template>
+
+            </div>
+        </div>
+    </ng-container>
+</ng-container>

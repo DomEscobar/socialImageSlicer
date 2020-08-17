@@ -15,6 +15,29 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "utils": [
+        "src/app/utils/index"
+      ],
+      "@core": [
+        "src/app/@core/index"
+      ],
+      "models": [
+        "src/app/models/index"
+      ],
+      "stores": [
+        "src/app/stores/index"
+      ],
+      "facades": [
+        "src/app/facades/index"
+      ],
+      "image": [
+        "src/app/facades/index"
+      ],
+      "@cropper": [
+        "image-cropper/index"
+      ]
+    }
   }
 }

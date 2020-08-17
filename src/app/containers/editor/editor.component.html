@@ -1,0 +1,3 @@
+<ng-container *ngIf="image$ | async as image">
+    <image-cropper [imageBase64]="image.source"></image-cropper>
+</ng-container>

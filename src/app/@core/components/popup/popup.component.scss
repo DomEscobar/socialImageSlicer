@@ -1,0 +1,23 @@
+@import 'variables';
+
+.popup-bg {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  padding: 20px;
+  z-index: 999999;
+  color: white;
+  box-shadow: 1px 1px 16px 2px #3333334f;
+}
+
+.info{
+  background-color: $info-color;
+}
+
+.success{
+  background-color: $success-color;
+}
+
+.error{
+  background-color: $error-color;
+}

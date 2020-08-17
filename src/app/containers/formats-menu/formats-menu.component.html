@@ -1,0 +1,11 @@
+<ul>
+    <i *ngFor="let provider of providers$ | async" (click)="readFormatsAsync(provider)" [class.active]="selectedProvider == provider">
+        {{provider}}
+    </i>
+</ul>
+<ng-container *ngIf="selectedProvider">
+    <hr>
+    <div *ngFor="let format of formats">
+        {{format.name}}
+    </div>
+</ng-container>
