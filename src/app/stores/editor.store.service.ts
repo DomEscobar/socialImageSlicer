@@ -15,6 +15,13 @@ export class EditorStoreService
 
   constructor() { }
 
+  private updateImageFormat(formatData: FormatData): void
+  {
+    const img = this.image;
+    img.formatData = formatData;
+    this.image = img;
+  }
+
   public get image(): ImageData
   {
     return this._image.getValue();
@@ -22,6 +29,11 @@ export class EditorStoreService
 
   public set image(imageData: ImageData)
   {
+    if (this.formatData)
+    {
+      imageData.formatData = this.formatData;
+    }
+
     this._image.next(imageData);
   }
 
@@ -30,8 +42,13 @@ export class EditorStoreService
     return this._format.getValue();
   }
 
-  public set formatData(provider: FormatData)
+  public set formatData(formatData: FormatData)
   {
-    this._format.next(provider);
+    if (this.image)
+    {
+      this.updateImageFormat(formatData);
+    }
+
+    this._format.next(formatData);
   }
 }

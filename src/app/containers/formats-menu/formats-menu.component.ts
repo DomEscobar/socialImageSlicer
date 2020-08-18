@@ -1,8 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormatData } from 'models';
-import { Popup } from '@core';
+import { FormatsMenuFacade } from '../../facades/formats-menu.facade';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-formats-menu',
@@ -12,29 +11,38 @@ import { Popup } from '@core';
 })
 export class FormatsMenuComponent implements OnInit
 {
-  public providers$: Observable<string[]>;
   public selectedProvider: string;
-  public formats: FormatData[];
 
-  constructor(private http: HttpClient, private changedetectionRef: ChangeDetectorRef) { }
+  constructor(private formatsMenuFacade: FormatsMenuFacade) { }
 
   ngOnInit(): void
   {
-    this.providers$ = this.http.get<string[]>('./assets/providers/providers.json');
+    this.formatsMenuFacade.initMenu();
   }
 
-  public async readFormatsAsync(providername: string): Promise<void>
+  public selectProvider(provider: string): void
   {
-    await this.http.get<FormatData[]>(`./assets/providers/${ providername }/formats.json`).toPromise()
-      .then(formats =>
-      {
-        this.selectedProvider = providername;
-        this.formats = formats;
-        this.changedetectionRef.markForCheck();
-      })
-      .catch(error =>
-      {
-        Popup.error('Provider doesnt exists');
-      });
+    if (provider === this.selectedProvider)
+    {
+      this.selectedProvider = null;
+      return;
+    }
+
+    this.selectedProvider = provider;
+  }
+
+  public get providers$(): Observable<string[]>
+  {
+    return this.formatsMenuFacade.providers$
+  }
+
+  public getFormats(): FormatData[]
+  {
+    return this.formatsMenuFacade.providerMap.get(this.selectedProvider);
+  }
+
+  public selectFormat(format: FormatData): void
+  {
+    this.formatsMenuFacade.selectFormat(format);
   }
 }

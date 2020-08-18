@@ -1,19 +1,18 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { EditorStoreService } from 'stores';
-import { ImageData } from 'models';
 
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.scss']
+  styleUrls: ['./editor.component.scss'],
+  changeDetection : ChangeDetectionStrategy.OnPush
 })
 export class EditorComponent
 {
-  constructor(private editorStoreService: EditorStoreService) { }
+  public image$ =  this.editorStoreService.image$
+  public format$ =  this.editorStoreService.format$
 
-  get image$(): Observable<ImageData>
+  constructor(private editorStoreService: EditorStoreService)
   {
-    return this.editorStoreService.image$;
   }
 }

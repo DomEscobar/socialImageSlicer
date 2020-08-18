@@ -11,6 +11,7 @@ import { ImgUploadComponent } from './@core/components/img-upload/img-upload.com
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ImageCropperModule } from '@cropper';
+import { StartComponent } from './containers/start/start.component';
 
 export function createTranslateLoader(http: HttpClient)
 {
@@ -25,7 +26,8 @@ export function createTranslateLoader(http: HttpClient)
     HeaderComponent,
     PreviewComponent,
     Popup,
-    ImgUploadComponent
+    ImgUploadComponent,
+    StartComponent
   ],
   imports: [
     HttpClientModule,

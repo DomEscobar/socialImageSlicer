@@ -4,8 +4,7 @@ import { FormatData } from 'models';
 
 export class ImageData
 {
-    public imageSetting: ImageSetting;
-    public provider: FormatData;
+    public formatData: FormatData;
 
     constructor(
         public name: string,

@@ -1,12 +1,11 @@
 <app-popup></app-popup>
 
+<ng-container *ngIf="(editorStoreService.image$ | async) == null; else editMode">
+    <app-start></app-start>
+</ng-container>
 
-
-<app-img-upload (onFinish)="initEditor($event)">
-    <button>Upload</button>
-</app-img-upload>
-
-<app-formats-menu></app-formats-menu>
-
-<hr>
-<app-editor></app-editor>
+<ng-template #editMode>
+    <app-header></app-header>
+    <app-formats-menu></app-formats-menu>
+    <app-editor></app-editor>
+</ng-template>

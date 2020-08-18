@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Observable, Observer, from, throwError, BehaviorSubject } from 'rxjs';
-import { concatMap, catchError, tap, finalize, delay } from 'rxjs/operators';
+import { concatMap, catchError, tap, finalize, delay, take } from 'rxjs/operators';
 import { IUploadedFile } from './models/Iupload-file.model';
 import { UploadError } from './models/upload-error.enum';
 import { UploadState } from './models/upload-state.enum';
@@ -45,6 +45,7 @@ export class ImgUploadComponent
             delay(400)
           )
         ),
+        take(files.length),
         finalize(() =>
         {
           if (this.uploadState.getValue() == UploadState.ERROR)
@@ -53,7 +54,6 @@ export class ImgUploadComponent
           }
 
           this.displayFinish();
-          this.onFinish.emit(this.uploadFiles.getValue());
         })
       )
       .subscribe(
@@ -82,7 +82,8 @@ export class ImgUploadComponent
 
     setTimeout(() =>
     {
-      this.setState(UploadState.DEFAULT)
+      this.setState(UploadState.DEFAULT);
+      this.onFinish.emit(this.uploadFiles.getValue());
     }, this.successBuffer);
   }
 
@@ -129,7 +130,7 @@ export class ImgUploadComponent
   {
     return mimeType.match(/image\/*/) !== null;
   }
-  
+
   private clear(): void
   {
     this.uploadFiles.next([]);

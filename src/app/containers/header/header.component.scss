@@ -1,0 +1,24 @@
+@import 'variables';
+
+nav{
+    background: white;
+
+    .nav-item
+    {
+        display: inline-block;
+        padding: 10px;
+        height: 30px;
+
+        label
+        {
+            vertical-align: top;
+            line-height: 30px;
+            margin-left: 10px;
+
+            @media (max-width: $breakpoint-mobile)
+            {
+                display: none;
+            }
+        }
+    }
+}

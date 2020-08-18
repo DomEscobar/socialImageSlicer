@@ -6,7 +6,7 @@ import { EditorStoreService, ImagesStoreService } from 'stores';
 @Injectable({
   providedIn: 'root'
 })
-export class EditorFacadeService
+export class EditorFacade
 {
   constructor(
     private editorStoreService: EditorStoreService,
@@ -32,14 +32,6 @@ export class EditorFacadeService
     {
       Popup.error('Image not found');
       return;
-    }
-
-    if (img.provider)
-    {
-      this.editorStoreService.formatData = img.provider
-    } else
-    {
-      img.provider = this.editorStoreService.formatData;
     }
 
     this.editorStoreService.image = img;

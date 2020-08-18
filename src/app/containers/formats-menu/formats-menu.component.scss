@@ -1,4 +1,87 @@
-.active
-{
-    color:green;
+@import 'variables';
+
+.menu-container{
+    display: inline-block;
+
+    .menu-header{
+        background:#F0F0F0;
+        font-size: 11px;
+        text-align: center;
+        padding: 10px;
+        display: block;
+
+        @media (max-width: $breakpoint-mobile) {
+            padding: 5px;
+            font-size: 9px;
+        }
+    }
+}
+
+.main-menu{
+    width: 64px;
+    height: 100%;
+    text-align: center;
+    background: white;
+    li{ 
+        opacity: 0.5;
+        padding: 15px 0px;
+        
+        &.active{
+            opacity: 1;
+        }
+        
+        img{
+            width: 32px;
+            margin-bottom: 0.1rem;
+
+            @media (max-width: $breakpoint-mobile) {
+                width: 16px;
+            }
+        }
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+        width: 36px;
+
+        label{
+            display: none;
+        }
+    }
+}
+
+.second-level-menu{
+    width: 128px;
+    background-color: #F5F5F5;
+    text-align: center;
+    box-shadow: 3px 1px 4px rgb(144 144 144 / 27%);
+
+    li{
+        height: 90px;
+
+        img{
+            width: 60%;
+            margin: auto;
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+        width: 96px;
+
+        li{
+            height: 64px;
+        }
+    }
+}
+
+li{
+    font-size: 11px;
+    display: block;
+    cursor: pointer;
+}
+
+ul{
+    margin: 0px;
+    padding: 5px;
 }

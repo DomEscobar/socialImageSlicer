@@ -1,7 +1,13 @@
 [
-    {
-      "name" : "Profile Picture",
-      "width" : "180",
-      "height" : "180"
-    }
-  ]
+  {
+    "name": "Profile Picture",
+    "width": "180",
+    "height": "180",
+    "round": true
+  },
+  {
+    "name": "Header Picture",
+    "width": "1500",
+    "height": "500"
+  }
+]
