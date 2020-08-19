@@ -22,12 +22,9 @@ export class ImagesStoreService
     this._images.next(imageData);
   }
 
-  public addImage(imageData: ImageData): void
+  public addImages(imageDataList: ImageData[]): void
   {
-    this.images = [
-      ...this.images,
-      imageData
-    ];
+    this.images = this.images.concat(imageDataList);
   }
 
   public removeImage(imageData: ImageData): void

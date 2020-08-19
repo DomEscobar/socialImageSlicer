@@ -1,24 +1,30 @@
-@import 'variables';
+@import "variables";
 
-nav{
+nav {
     background: white;
 
-    .nav-item
-    {
+    .nav-item {
         display: inline-block;
         padding: 10px;
         height: 30px;
-
-        label
-        {
+        vertical-align: top;
+        cursor: pointer;
+        
+        label {
             vertical-align: top;
             line-height: 30px;
             margin-left: 10px;
 
-            @media (max-width: $breakpoint-mobile)
-            {
+            @media (max-width: $breakpoint-mobile) {
                 display: none;
             }
         }
+
+    }
+
+    .centered {
+        width: 250px;
+        margin: auto;
+        display: block;
     }
 }

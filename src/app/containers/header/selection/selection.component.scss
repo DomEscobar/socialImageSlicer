@@ -1,0 +1,63 @@
+.selectBox {
+    padding: 5px;
+    font-size: 1.2rem;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+
+    p {
+        margin: 0px;
+        padding-right: 15px;
+    }
+
+    .dropdown-icon {
+        float: right;
+        display: inline-block;
+        width: 24px;
+    }
+}
+
+:host {
+    display: block;
+    position: relative;
+}
+
+.option-box {
+    max-height: 400px;
+    position: fixed;
+    width: 100%;
+    background: white;
+    box-shadow: 1px 1px 3px 0px #b6b6b6;
+    text-align: left;
+    z-index: 100;
+    overflow: auto;
+    width: 250px;
+
+    .option-item {
+        padding: 11px 13px;
+        cursor: pointer;
+        border-bottom: 1px solid #f7f7f7;
+
+        &:hover {
+            background: #f0f0f0;
+        }
+
+        img {
+            width: 42px;
+            height: 42px;
+            margin: 5px;
+            border-radius: 2px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+    }
+
+    @media only screen and (max-width: 600px) {
+        left: 0px;
+        position: fixed;
+        top: 0px;
+        max-height: 100%;
+        width: 100% !important;
+        margin-left: -0px;
+    }
+}

@@ -1,0 +1,17 @@
+@import 'variables';
+
+.left-frame {
+    position: fixed;
+    left: 0px;
+    z-index: 1;
+}
+
+.editor-frame {
+    padding-top: 25px;
+    padding-left: 74px;
+    overflow: hidden;
+
+    @media (max-width: $breakpoint-mobile) {
+        padding-left: 46px;
+    }
+}

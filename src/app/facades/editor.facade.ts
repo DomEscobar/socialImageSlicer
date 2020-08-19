@@ -24,7 +24,7 @@ export class EditorFacade
     this.selectImage(imageDataList[0]);
   }
 
-  private selectImage(imgData: ImageData)
+  public selectImage(imgData: ImageData)
   {
     const img = this.imagesStoreService.images.find(o => o.guid == imgData.guid)
 
@@ -35,6 +35,12 @@ export class EditorFacade
     }
 
     this.editorStoreService.image = img;
+  }
+
+  public addUploadedImages(uploadedImages: IUploadedFile[]): void
+  {
+    const imageDataList = uploadedImages.map(img => this.transformToImageData(img));
+    this.imagesStoreService.addImages(imageDataList);
   }
 
   private transformToImageData(uploadedImg: IUploadedFile): ImageData

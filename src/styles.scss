@@ -1,13 +1,23 @@
-@import 'modal';
-@import 'animations';
+@import "modal";
+@import "animations";
+@import "variables";
 
-
-body{
-    font-family: sans-serif;
-    margin:0px;
-    background-color: #F7F7F7;
+:root {
+    --cropper-overlay-color: $bg-color;
 }
 
-label{
-    color: #AAAAAA;
+body {
+    font-family: sans-serif;
+    margin: 0px;
+    background-color: $bg-color;
+}
+
+label {
+    color: $label-color;
+}
+
+.ci-text {
+    background-image: linear-gradient(12deg, #0ef0ff, #ff04ec);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

@@ -1,8 +1,18 @@
 <nav>
-    <div class="nav-item">
-        <app-img-upload (onFinish)="addImages($event)">
+    <div class="nav-item" style="float:left">
+        <app-img-upload (onFinish)="addUploadedImages($event)">
             <img src="assets/img/addImage.png"> <label> Add images</label>
         </app-img-upload>
     </div>
 
+    <div class="nav-item" style="float:right">
+        <app-img-upload (onFinish)="addUploadedImages($event)">
+            <label class="ci-text" style="margin-right: 10px;"> Export</label>
+            <img style="width: 24px;" src="assets/img/download.png">
+        </app-img-upload>
+    </div>
+
+    <div class="nav-item centered">
+        <app-selection></app-selection>
+    </div>
 </nav>

@@ -12,6 +12,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ImageCropperModule } from '@cropper';
 import { StartComponent } from './containers/start/start.component';
+import { SelectionComponent } from './containers/header/selection/selection.component';
 
 export function createTranslateLoader(http: HttpClient)
 {
@@ -27,7 +28,8 @@ export function createTranslateLoader(http: HttpClient)
     PreviewComponent,
     Popup,
     ImgUploadComponent,
-    StartComponent
+    StartComponent,
+    SelectionComponent
   ],
   imports: [
     HttpClientModule,

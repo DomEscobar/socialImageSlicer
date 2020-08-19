@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
+import { Observable, from, throwError, Observer } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { FormatData } from 'models';
-import { tap, concatMap, take, catchError, map } from 'rxjs/operators';
+import { tap, concatMap, take, catchError, map, finalize, mergeMap } from 'rxjs/operators';
 import { Popup } from '@core';
 import { EditorStoreService } from 'stores';
 
@@ -18,19 +18,27 @@ export class FormatsMenuFacade
     private editorStoreService: EditorStoreService,
     private http: HttpClient) { }
 
-  private initFormats(providers: string[])
+  private initFormats(providers: string[]): Observable<string[]>
   {
-    from(providers).pipe(
-      concatMap(provider =>
-        this.readFormats(provider).pipe(
-          catchError(error => throwError(provider)),
-          map(formats => { return { "provider": provider, "formats": formats } })
-        )),
-      take(providers.length)
-    ).subscribe(
-      result => this.providerMap.set(result.provider, result.formats),
-      error => Popup.error(`Missing formats of provider : ${ error }`)
-    )
+    return new Observable<string[]>((observer: Observer<string[]>) =>
+    {
+      from(providers).pipe(
+        concatMap(provider =>
+          this.readFormats(provider).pipe(
+            catchError(error => throwError(provider)),
+            map(formats => { return { "provider": provider, "formats": formats } })
+          )),
+        take(providers.length),
+        finalize(() =>
+        {
+          observer.next(providers);
+          observer.complete();
+        })
+      ).subscribe(
+        result => this.providerMap.set(result.provider, result.formats),
+        error => Popup.error(`Missing formats of provider : ${ error }`)
+      )
+    });
   }
 
   private readFormats(provider: string): Observable<FormatData[]>
@@ -38,10 +46,19 @@ export class FormatsMenuFacade
     return this.http.get<FormatData[]>(`./assets/providers/${ provider }/formats.json`);
   }
 
-  public initMenu()
+  private getDefaultFormat(): FormatData
+  {
+    return this.providerMap.get('Custom')[0];
+  }
+
+  public initMenu(): void
   {
     this.providers$ = this.getProviders().pipe(
-      tap(providers => this.initFormats(providers))
+      mergeMap(providers => this.initFormats(providers)),
+      finalize(() =>
+      {
+        this.selectFormat(this.getDefaultFormat());
+      })
     );
   }
 

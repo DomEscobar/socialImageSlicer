@@ -1,0 +1,13 @@
+[
+  {
+    "name": "Square",
+    "width": "128",
+    "height": "128"
+  },
+  {
+    "name": "Circle",
+    "width": "128",
+    "height": "128",
+    "round": true
+  }
+]
