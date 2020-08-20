@@ -5,11 +5,9 @@
         </app-img-upload>
     </div>
 
-    <div class="nav-item" style="float:right">
-        <app-img-upload (onFinish)="addUploadedImages($event)">
+    <div class="nav-item" style="float:right" (click)="exportImages()">
             <label class="ci-text" style="margin-right: 10px;"> Export</label>
             <img style="width: 24px;" src="assets/img/download.png">
-        </app-img-upload>
     </div>
 
     <div class="nav-item centered">

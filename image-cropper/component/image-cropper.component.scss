@@ -5,7 +5,6 @@
     max-width: 100%;
     max-height: 100%;
     overflow: hidden;
-    padding: 5px;
     text-align: center;
 
     > div {
@@ -31,12 +30,11 @@
     .cropper {
         position: absolute;
         display: flex;
-        color: #53535C;
+        color: #53535c;
         background: transparent;
         outline: rgba(255, 255, 255, 0.3) solid 100vw;
         outline: var(--cropper-outline-color, rgba(255, 255, 255, 0.3)) solid 100vw;
         touch-action: none;
-
 
         @media (orientation: portrait) {
             outline-width: 100vh;
@@ -44,14 +42,14 @@
 
         &:after {
             position: absolute;
-            content: '';
+            content: "";
             top: 0;
             bottom: 0;
             left: 0;
             right: 0;
             pointer-events: none;
             border: dashed 1px;
-            opacity: .75;
+            opacity: 0.75;
             color: inherit;
             z-index: 1;
         }
@@ -59,7 +57,7 @@
         .move {
             width: 100%;
             cursor: move;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 3px dashed rgb(155 79 237);
         }
 
         &:focus {
@@ -74,15 +72,14 @@
             display: inline-block;
             line-height: 6px;
             padding: 8px;
-            opacity: .85;
+            opacity: 0.85;
             z-index: 1;
 
             .square {
                 display: inline-block;
-                background: #53535C;
+                background: transparent;
                 width: 6px;
                 height: 6px;
-                border: 1px solid rgba(255, 255, 255, 0.5);
                 box-sizing: content-box;
             }
 
@@ -133,7 +130,6 @@
                 left: -12px;
                 cursor: ew-resize;
             }
-
         }
 
         .resize-bar {
@@ -195,7 +191,9 @@
 
     &.disabled {
         .cropper {
-            .resize, .resize-bar, .move {
+            .resize,
+            .resize-bar,
+            .move {
                 display: none;
             }
         }

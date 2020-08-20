@@ -8,8 +8,8 @@
 </ng-container>
 
 <div #selectbox class="selectBox " (click)="showOptions=true;">
-    <img class="dropdown-icon" src="assets/img/dropdown.svg" />
     <p *ngIf="selected$ | async as selected">
-        {{selected.name}}
+        <span>{{selected.name}} </span>
+        <img class="dropdown-icon" src="assets/img/dropdown.svg" />
     </p>
 </div>

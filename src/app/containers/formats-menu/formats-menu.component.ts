@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormatData } from 'models';
 import { FormatsMenuFacade } from '../../facades/formats-menu.facade';
 import { Observable } from 'rxjs';
+import { EditorStoreService } from 'stores';
 
 @Component({
   selector: 'app-formats-menu',
@@ -11,13 +12,24 @@ import { Observable } from 'rxjs';
 })
 export class FormatsMenuComponent implements OnInit
 {
-  public selectedProvider: string;
 
-  constructor(private formatsMenuFacade: FormatsMenuFacade) { }
+  constructor(
+    private editorStoreService: EditorStoreService,
+    private formatsMenuFacade: FormatsMenuFacade) { }
 
   ngOnInit(): void
   {
     this.formatsMenuFacade.initMenu();
+  }
+
+  get selectedProvider(): string
+  {
+    return this.editorStoreService.selectedProvider;
+  }
+
+  set selectedProvider(provider: string)
+  {
+    this.editorStoreService.selectedProvider = provider;
   }
 
   public selectProvider(provider: string): void

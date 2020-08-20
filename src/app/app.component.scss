@@ -3,7 +3,7 @@
 .left-frame {
     position: fixed;
     left: 0px;
-    z-index: 1;
+    z-index: 2;
 }
 
 .editor-frame {
@@ -12,6 +12,9 @@
     overflow: hidden;
 
     @media (max-width: $breakpoint-mobile) {
-        padding-left: 46px;
+        padding-top: 5px;
+        padding-left: 45px;
+        height: 100%;
+        padding-right: 10px;
     }
 }

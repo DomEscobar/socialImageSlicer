@@ -9,7 +9,7 @@ nav {
         height: 30px;
         vertical-align: top;
         cursor: pointer;
-        
+
         label {
             vertical-align: top;
             line-height: 30px;
@@ -19,12 +19,15 @@ nav {
                 display: none;
             }
         }
-
     }
 
     .centered {
         width: 250px;
         margin: auto;
         display: block;
+
+        @media (max-width: $breakpoint-mobile) {
+            width: 170px;
+        }
     }
 }

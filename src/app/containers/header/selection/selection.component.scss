@@ -5,15 +5,31 @@
     border-radius: 5px;
     cursor: pointer;
 
+    .dropdown-icon {
+        display: inline-block;
+        width: 24px;
+    }
+
     p {
         margin: 0px;
         padding-right: 15px;
+
+        span {
+            vertical-align: super;
+        }
     }
 
-    .dropdown-icon {
-        float: right;
-        display: inline-block;
-        width: 24px;
+    @media only screen and (max-width: 600px) {
+        width: 170px;
+        line-height: 0px;
+        
+        p {
+            font-size: 13px;
+
+            span {
+                vertical-align: text-top;
+            }
+        }
     }
 }
 

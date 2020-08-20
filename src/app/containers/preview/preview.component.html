@@ -1,1 +1,5 @@
-<p>preview works!</p>
+<ng-container *ngIf="layout$ | async as layout">
+    <div [innerHTML]="layout">
+
+    </div>
+</ng-container>

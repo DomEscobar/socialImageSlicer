@@ -15,8 +15,8 @@
         display: block;
 
         @media (max-width: $breakpoint-mobile) {
-            padding: 5px;
-            font-size: 9px;
+            padding: 4px;
+            font-size: 8px;
         }
     }
 }
@@ -49,8 +49,7 @@
     }
 
     @media (max-width: $breakpoint-mobile) {
-        width: 36px;
-
+        width: 27px;
         label {
             display: none;
         }
@@ -78,7 +77,7 @@
     }
 
     @media (max-width: $breakpoint-mobile) {
-        width: 96px;
+        width: 80px;
 
         li {
             height: 64px;

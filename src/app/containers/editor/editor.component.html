@@ -3,6 +3,8 @@
         <image-cropper 
         [roundCropper]="format.round"
         [aspectRatio]="format.width / format.height"
+        (imageCropped)="crop($event)"
+        (fileChangeEvent)="crop($event)"
         [imageBase64]="image.source">
     </image-cropper>
     </ng-container>

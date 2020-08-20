@@ -1,8 +1,14 @@
-.container{
+.container {
     text-align: center;
-    margin-top: 10rem;
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 100%;
 
-    img{
+    img {
         max-width: 256px;
         padding: 40px;
         border-radius: 10px;

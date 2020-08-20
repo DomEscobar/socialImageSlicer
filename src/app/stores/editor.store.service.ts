@@ -13,6 +13,8 @@ export class EditorStoreService
   private readonly _format = new BehaviorSubject<FormatData>(null);
   public readonly format$ = this._format.asObservable();
 
+  public selectedProvider: string;
+
   constructor() { }
 
   private updateImageFormat(formatData: FormatData): void
