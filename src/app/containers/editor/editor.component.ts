@@ -1,8 +1,10 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, AfterViewInit } from '@angular/core';
 import { EditorStoreService } from 'stores';
 import { ImageCroppedEvent } from '@cropper';
 import { BehaviorSubject } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { EditorFacade } from 'facades';
+import { ImageCropperComponent } from '@cropper';
 
 @Component({
   selector: 'app-editor',
@@ -10,30 +12,55 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   styleUrls: ['./editor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditorComponent
+export class EditorComponent implements AfterViewInit
 {
+  @ViewChild(ImageCropperComponent, { static: false })
+  imageCropper: ImageCropperComponent;
+
   public image$ = this.editorStoreService.image$;
   public format$ = this.editorStoreService.format$;
 
   private readonly _crop = new BehaviorSubject<ImageCroppedEvent>(null);
   public crop$ = this._crop.asObservable();
 
-  constructor(private editorStoreService: EditorStoreService)
+  constructor(
+    private editorFacade: EditorFacade,
+    private editorStoreService: EditorStoreService)
   {
-    this.crop$.pipe(
-      debounceTime(300),
-      distinctUntilChanged()
-    ).subscribe(
-      cropperData =>
+
+  }
+
+  ngAfterViewInit(): void
+  {
+    this.addEditorReloadListener();
+    this.addCroppListener();
+  }
+
+  private addEditorReloadListener(): void
+  {
+    this.editorFacade.refresh$.subscribe(
+      () =>
       {
-        if (!cropperData)
+        if (!this.imageCropper)
         {
           return;
         }
 
-        const img = this.editorStoreService.image;
-        img.cropperData = cropperData;
-        this.editorStoreService.image = img;
+        this.imageCropper.initCropper(true);
+      }
+    );
+  }
+
+  private addCroppListener(): void
+  {
+    this.crop$.pipe(
+      filter(cropperdata => cropperdata != null),
+      debounceTime(300),
+      distinctUntilChanged((crop1, crop2) => JSON.stringify(crop1) === JSON.stringify(crop2))
+    ).subscribe(
+      cropperData =>
+      {
+        this.editorFacade.updateImageCropperData(cropperData);
       }
     );
   }

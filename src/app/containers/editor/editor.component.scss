@@ -1,3 +1,20 @@
-:host{
+@import "variables";
+
+:host {
+    padding-top: 25px;
+    padding-right: 25px;
+    padding-left: 94px;
+    overflow: hidden;
+    width: 100%;
     display: block;
+
+    @media (max-width: $breakpoint-mobile) {
+        padding-left: 43px;
+        height: 100%;
+        padding-right: 10px;
+    }
+
+    @media (min-width: $breakpoint-medium) {
+        flex: 1;
+    }
 }

@@ -1,5 +1,8 @@
 <ng-container *ngIf="layout$ | async as layout">
-    <div [innerHTML]="layout">
+    <div class="preview-container">
+        <h3>Live preview</h3>
+        <div [innerHTML]="layout">
 
+        </div>
     </div>
 </ng-container>

@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { EditorStoreService } from 'stores';
-import { switchMap, debounceTime, distinctUntilChanged, catchError, filter, take, tap, map, delay } from 'rxjs/operators';
+import { switchMap, distinctUntilChanged, catchError, filter, take, tap, map, delay } from 'rxjs/operators';
 import { FormatData } from 'models';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, Subscription, throwError, Observer, empty } from 'rxjs';
 import { Popup } from '@core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Console } from 'console';
+import { EditorFacade } from 'facades';
 
 @Component({
   selector: 'app-preview',
@@ -25,6 +25,7 @@ export class PreviewComponent implements OnInit
     private domSanitizer: DomSanitizer,
     private elementRef: ElementRef,
     private httpClient: HttpClient,
+    private editorFacade: EditorFacade,
     private editorStoreService: EditorStoreService) { }
 
   ngOnInit(): void
@@ -37,8 +38,8 @@ export class PreviewComponent implements OnInit
       .subscribe(
         layoutStr =>
         {
+          this.setVisible(true);
           this._layout.next(this.domSanitizer.bypassSecurityTrustHtml(layoutStr));
-
           // Mess callback until view rendered
           setTimeout(() =>
           {
@@ -53,12 +54,20 @@ export class PreviewComponent implements OnInit
       );
   }
 
+  private setVisible(isVisible: boolean)
+  {
+    (<HTMLElement>this.elementRef.nativeElement).style.display = isVisible ? 'block' : 'none';
+    this.editorFacade.reloadEditor();
+  }
+
   private handleNoLayout()
   {
     if (this.imageChangeListener)
     {
       this.imageChangeListener.unsubscribe();
     }
+
+    this.setVisible(false);
 
     this._layout.next(null);
 
@@ -69,6 +78,7 @@ export class PreviewComponent implements OnInit
   {
     this.imageChangeListener = this.editorStoreService.image$.pipe(
       map(img => img.cropperData),
+      filter(cropperData => cropperData != null),
       distinctUntilChanged((cropData1, cropData2) => JSON.stringify(cropData1) === JSON.stringify(cropData2)),
     ).subscribe(
       cropperData =>

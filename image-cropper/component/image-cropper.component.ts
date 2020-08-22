@@ -80,12 +80,17 @@ export class ImageCropperComponent implements OnChanges, OnInit {
     @Input() backgroundColor: string;
     @Input() containWithinAspectRatio = false;
     @Input() hideResizeSquares = false;
-    @Input() cropper: CropperPosition = {
+    
+    private readonly DEFAULT_CROPPER = {
         x1: -100,
         y1: -100,
         x2: 10000,
         y2: 10000
     };
+
+    @Input() cropper: CropperPosition = this.DEFAULT_CROPPER;
+
+
     @HostBinding('style.text-align')
     @Input() alignImage: 'left' | 'center' = 'center';
     @HostBinding('class.disabled')
@@ -171,7 +176,7 @@ export class ImageCropperComponent implements OnChanges, OnInit {
         this.activatePinchGesture();
     }
 
-    private initCropper(): void {
+    public initCropper(refresh = false): void {
         this.imageVisible = false;
         this.transformedImage = null;
         this.safeImgDataUrl = 'data:image/png;base64,iVBORw0KGg'
@@ -200,10 +205,29 @@ export class ImageCropperComponent implements OnChanges, OnInit {
             width: 0,
             height: 0
         };
-        this.cropper.x1 = -100;
-        this.cropper.y1 = -100;
-        this.cropper.x2 = 10000;
-        this.cropper.y2 = 10000;
+
+        if(this.cropper == null)
+        {
+            this.cropper = this.DEFAULT_CROPPER;
+        }
+            
+        if(refresh)
+        {
+            this.loadBase64Image(this.imageBase64);
+        }
+    }
+
+    public setCropperData(ImageCroppedEvent :ImageCroppedEvent) : void 
+    {
+        if(ImageCroppedEvent == null)
+        {
+            return;
+        }
+
+        this.cropper.x1 = ImageCroppedEvent.cropperPosition.x1;
+        this.cropper.y1 = ImageCroppedEvent.cropperPosition.y1;
+        this.cropper.x2 = ImageCroppedEvent.cropperPosition.x2;
+        this.cropper.y2 = ImageCroppedEvent.cropperPosition.y2;
     }
 
     private loadImage(imageBase64: string, imageType: string) {
@@ -363,7 +387,15 @@ export class ImageCropperComponent implements OnChanges, OnInit {
         } else if (this.sourceImageLoaded()) {
             this.setMaxSize();
             this.setCropperScaledMinSize();
-            this.resetCropperPosition();
+
+            if(JSON.stringify(this.cropper) === JSON.stringify(this.DEFAULT_CROPPER))
+            {
+                this.resetCropperPosition();
+            }else{
+                this.doAutoCrop();
+                this.imageVisible = true;
+            }
+
             this.cropperReady.emit({...this.maxSize});
             this.cd.markForCheck();
         } else {

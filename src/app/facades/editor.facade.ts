@@ -2,12 +2,17 @@ import { Injectable } from '@angular/core';
 import { Popup, IUploadedFile } from '@core';
 import { ImageData } from 'models';
 import { EditorStoreService, ImagesStoreService } from 'stores';
+import { Subject } from 'rxjs';
+import { ImageCroppedEvent } from '@cropper';
 2
 @Injectable({
   providedIn: 'root'
 })
 export class EditorFacade
 {
+  private readonly _refresh = new Subject<void>();
+  public readonly refresh$ = this._refresh.asObservable();
+
   constructor(
     private editorStoreService: EditorStoreService,
     private imagesStoreService: ImagesStoreService) { }
@@ -22,6 +27,18 @@ export class EditorFacade
     const imageDataList = uploadedImages.map(img => this.transformToImageData(img));
     this.imagesStoreService.images = imageDataList;
     this.selectImage(imageDataList[0]);
+  }
+
+  public reloadEditor(): void
+  {
+    this._refresh.next();
+  }
+
+  public updateImageCropperData(cropperData: ImageCroppedEvent): void
+  {
+    const img = this.editorStoreService.image;
+    img.cropperData = cropperData;
+    this.editorStoreService.image = img;
   }
 
   public selectImage(imgData: ImageData)

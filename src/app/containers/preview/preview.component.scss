@@ -1,0 +1,21 @@
+@import "variables";
+
+h3 {
+    margin-top: 0px;
+    color: #ababab;
+    text-align: center;
+}
+
+:host {
+    width: 100%;
+    display: block;
+    background: #dedede;
+    padding-left: 55px;
+    padding-top: 25px;
+    padding-right: 15px;
+
+    @media (min-width: $breakpoint-medium) {
+        flex: 1;
+        height: calc(100vh - 75px);
+    }
+}

@@ -15,17 +15,32 @@ export class ExportService
 
   public async exportImages(): Promise<void>
   {
+    if (this.imagesStoreService.images.length == 1)
+    {
+      await this.exportAsImage();
+      return;
+    }
+
     const zip = new JSZip();
     var img = zip.folder('');
 
     this.imagesStoreService.images.forEach(image =>
     {
-      img.file(image.name, image.source.split(',')[1], { base64: true });
+      img.file(image.name, image.cropperData.base64.split(',')[1], { base64: true });
     });
 
     await zip.generateAsync({ type: 'blob' }).then((content) =>
     {
       FileSaver.saveAs(content, 'sliced-images.zip');
     });
+  }
+
+  private async exportAsImage(): Promise<void>
+  {
+    for (const img of this.imagesStoreService.images)
+    {
+      const blob = await fetch(img.cropperData.base64);
+      FileSaver.saveAs(await (blob.blob()), img.name);
+    }
   }
 }

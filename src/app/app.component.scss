@@ -1,20 +1,15 @@
-@import 'variables';
+@import "variables";
 
 .left-frame {
     position: fixed;
     left: 0px;
     z-index: 2;
+    box-shadow: 3px 9px 10px 0px #e4e4e4;
+    height: 100%;
+    background: white;
 }
 
-.editor-frame {
-    padding-top: 25px;
-    padding-left: 74px;
-    overflow: hidden;
-
-    @media (max-width: $breakpoint-mobile) {
-        padding-top: 5px;
-        padding-left: 45px;
-        height: 100%;
-        padding-right: 10px;
-    }
+.container {
+    display: flex;
+    flex-flow: wrap;
 }

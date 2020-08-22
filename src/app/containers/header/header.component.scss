@@ -1,8 +1,18 @@
 @import "variables";
 
+:host {
+    height: 50px;
+    display: block;
+}
+
 nav {
     background: white;
-
+    box-shadow: 3px 9px 10px 0px #e4e4e4;
+    position: fixed;
+    height: 50px;
+    z-index: 1;
+    width: 100%;
+    
     .nav-item {
         display: inline-block;
         padding: 10px;
