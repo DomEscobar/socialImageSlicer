@@ -2,8 +2,7 @@
   {
     "name": "Profile Picture",
     "width": "180",
-    "height": "180",
-    "round": true
+    "height": "180"
   },
   {
     "name": "Header Picture",

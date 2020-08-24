@@ -36,7 +36,6 @@ export class ImageCropperComponent implements OnChanges, OnInit {
     private transformedImage: HTMLImageElement;
     private originalBase64: string;
     private transformedBase64: string;
-    private moveStart: MoveStart;
     private originalSize: Dimensions;
     private transformedSize: Dimensions;
     private setImageMaxSizeRetries = 0;
@@ -81,6 +80,12 @@ export class ImageCropperComponent implements OnChanges, OnInit {
     @Input() containWithinAspectRatio = false;
     @Input() hideResizeSquares = false;
     
+    @Input()
+     public moveStart: MoveStart;
+
+     @Input()
+     public moveStartChange: EventEmitter<MoveStart> = new EventEmitter();
+
     private readonly DEFAULT_CROPPER = {
         x1: -100,
         y1: -100,
@@ -167,7 +172,8 @@ export class ImageCropperComponent implements OnChanges, OnInit {
         this.safeTransformStyle = this.sanitizer.bypassSecurityTrustStyle(
             'scaleX(' + (this.transform.scale || 1) * (this.transform.flipH ? -1 : 1) + ')' +
             'scaleY(' + (this.transform.scale || 1) * (this.transform.flipV ? -1 : 1) + ')' +
-            'rotate(' + (this.transform.rotate || 0) + 'deg)'
+            'rotate(' + (this.transform.rotate || 0) + 'deg)'+
+            'translate(' + (this.transform.transformX || 0) + 'px, ' + (this.transform.transformY || 0) + 'px)'
         );
     }
 
@@ -540,6 +546,10 @@ export class ImageCropperComponent implements OnChanges, OnInit {
     }
 
     startMove(event: any, moveType: MoveTypes, position: string | null = null): void {
+
+        event.stopPropagation();
+        event.preventDefault();
+
         if (this.moveStart && this.moveStart.active && this.moveStart.type === MoveTypes.Pinch) {
             return;
         }
@@ -554,6 +564,8 @@ export class ImageCropperComponent implements OnChanges, OnInit {
             clientY: this.getClientY(event),
             ...this.cropper
         };
+
+        this.moveStartChange.emit(this.moveStart);
     }
 
     startPinch(event: any) {
@@ -571,6 +583,8 @@ export class ImageCropperComponent implements OnChanges, OnInit {
             clientY: this.cropper.y1 + (this.cropper.y2 - this.cropper.y1) / 2,
             ...this.cropper
         };
+
+        this.moveStartChange.emit(this.moveStart);
     }
 
     @HostListener('document:mousemove', ['$event'])
@@ -847,8 +861,11 @@ export class ImageCropperComponent implements OnChanges, OnInit {
                 const scaleX = (this.transform.scale || 1) * (this.transform.flipH ? -1 : 1);
                 const scaleY = (this.transform.scale || 1) * (this.transform.flipV ? -1 : 1);
 
+                const translateX = (this.transform.transformX || 1);
+                const translateY = (this.transform.transformY || 1);
+
                 ctx.setTransform(scaleX, 0, 0, scaleY, this.transformedSize.width / 2, this.transformedSize.height / 2);
-                ctx.translate(-imagePosition.x1 / scaleX, -imagePosition.y1 / scaleY);
+                ctx.translate(-(imagePosition.x1 - translateX) / scaleX, -(imagePosition.y1-translateY) / scaleY);
                 ctx.rotate((this.transform.rotate || 0) * Math.PI / 180);
                 ctx.drawImage(this.transformedImage, -this.transformedSize.width / 2, -this.transformedSize.height / 2);
 

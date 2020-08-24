@@ -13,6 +13,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ImageCropperModule } from '@cropper';
 import { StartComponent } from './containers/start/start.component';
 import { SelectionComponent } from './containers/header/selection/selection.component';
+import { DraggableDirective } from './containers/editor/draggable.directive';
 
 export function createTranslateLoader(http: HttpClient)
 {
@@ -29,7 +30,8 @@ export function createTranslateLoader(http: HttpClient)
     Popup,
     ImgUploadComponent,
     StartComponent,
-    SelectionComponent
+    SelectionComponent,
+    DraggableDirective
   ],
   imports: [
     HttpClientModule,

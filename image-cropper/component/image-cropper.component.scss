@@ -7,6 +7,7 @@
     overflow: hidden;
     text-align: center;
 
+
     > div {
         width: 100%;
         position: relative;
@@ -25,6 +26,8 @@
         outline: var(--cropper-overlay-color, white) solid 100vw;
         top: 0;
         left: 0;
+        border: 2px solid white;
+        box-shadow: 1px 3px 6px #d8d8d8;
     }
 
     .cropper {
@@ -58,6 +61,10 @@
             width: 100%;
             cursor: move;
             border: 5px dashed rgb(155 79 237);
+
+            @media (max-width: 600px) {
+                border: 2px dashed rgb(155 79 237);
+            }
         }
 
         &:focus {

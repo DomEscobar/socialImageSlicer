@@ -1,0 +1,46 @@
+<style>
+    .header-prev {
+        max-width: 600px;
+        position: relative;
+        margin: auto;
+    }
+
+    .header-prev-content {
+        padding-bottom: 33.3333%;
+    }
+
+    #HeaderPicture {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+    }
+
+    #ProfilePicture {
+        width: 78px;
+        height: 78px;
+        border-radius: 50%;
+        border: 2px solid white;
+        position: absolute;
+        bottom: -20%;
+        left: 5%;
+    }
+
+    @media only screen and (min-width: 600px) {
+        #ProfilePicture {
+            border: 4px solid white;
+            width: 134px;
+            height: 134px;
+        }
+    }
+</style>
+
+<div class="header-prev">
+    <div class="header-prev-content">
+        <img id="HeaderPicture"
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPUuPr/PwAGJgL9mdv/dgAAAABJRU5ErkJggg==" />
+        <img id="ProfilePicture"
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mOc+h8AAi8BltbblRQAAAAASUVORK5CYII=" />
+    </div>
+</div>

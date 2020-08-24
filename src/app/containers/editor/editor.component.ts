@@ -1,10 +1,11 @@
-import { Component, ChangeDetectionStrategy, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, AfterViewInit, HostListener } from '@angular/core';
 import { EditorStoreService } from 'stores';
 import { ImageCroppedEvent } from '@cropper';
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { EditorFacade } from 'facades';
-import { ImageCropperComponent } from '@cropper';
+import { ImageCropperComponent, ImageTransform } from '@cropper';
+import { Translate } from './draggable.directive';
 
 @Component({
   selector: 'app-editor',
@@ -23,12 +24,19 @@ export class EditorComponent implements AfterViewInit
   private readonly _crop = new BehaviorSubject<ImageCroppedEvent>(null);
   public crop$ = this._crop.asObservable();
 
+  public transform: ImageTransform = { scale: 1, transformX: 0, transformY: 0 };
+  public isCropDragging: boolean;
+
+  @HostListener("mousewheel", ["$event"])
+  public windowScrolled($event: MouseWheelEvent)
+  {
+    this.zoom($event.deltaY < 0);
+  }
+
   constructor(
     private editorFacade: EditorFacade,
     private editorStoreService: EditorStoreService)
-  {
-
-  }
+  { }
 
   ngAfterViewInit(): void
   {
@@ -55,7 +63,6 @@ export class EditorComponent implements AfterViewInit
   {
     this.crop$.pipe(
       filter(cropperdata => cropperdata != null),
-      debounceTime(300),
       distinctUntilChanged((crop1, crop2) => JSON.stringify(crop1) === JSON.stringify(crop2))
     ).subscribe(
       cropperData =>
@@ -65,8 +72,30 @@ export class EditorComponent implements AfterViewInit
     );
   }
 
+  public moveImage(translate: Translate)
+  {
+    this.transform = {
+      ...this.transform,
+      transformX: translate.x,
+      transformY: translate.y,
+    };
+  }
+
+  private zoom(isZoomIn: boolean): void
+  {
+    this.transform = {
+      ...this.transform,
+      scale: this.transform.scale + (isZoomIn ? .1 : -.1)
+    };
+  }
+
   public crop(cropperData: ImageCroppedEvent): void
   {
     this._crop.next(cropperData);
+  }
+
+  public onZoom(factor)
+  {
+
   }
 }
