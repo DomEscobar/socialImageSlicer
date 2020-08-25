@@ -134,7 +134,7 @@ export class ImageCropperComponent implements OnChanges, OnInit {
             this.doAutoCrop();
             this.cd.markForCheck();
         }
-        if (changes.aspectRatio && this.imageVisible) {
+        if (changes.aspectRatio && this.imageVisible && JSON.stringify(this.cropper) === JSON.stringify(this.DEFAULT_CROPPER)){
             this.resetCropperPosition();
         }
         if (changes.transform) {
