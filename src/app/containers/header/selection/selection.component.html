@@ -2,14 +2,14 @@
     <div class="option-box fadeInDown">
         <div *ngFor="let image of images$|async" (click)="select(image)" class="option-item">
             <img [src]="image.source" />
-            {{image.name}}
+            <span [title]="image.name"> {{image.name | truncate : 17}} </span>
         </div>
     </div>
 </ng-container>
 
 <div #selectbox class="selectBox " (click)="showOptions=true;">
     <p *ngIf="selected$ | async as selected">
-        <span>{{selected.name}} </span>
+        <span [title]="selected.name">{{selected.name | truncate : 17}} </span>
         <img class="dropdown-icon" src="assets/img/dropdown.svg" />
     </p>
 </div>

@@ -79,6 +79,7 @@ export class ImageCropperComponent implements OnChanges, OnInit {
     @Input() backgroundColor: string;
     @Input() containWithinAspectRatio = false;
     @Input() hideResizeSquares = false;
+    @Input() isDragging = false;
     
     @Input()
      public moveStart: MoveStart;
@@ -547,6 +548,11 @@ export class ImageCropperComponent implements OnChanges, OnInit {
 
     startMove(event: any, moveType: MoveTypes, position: string | null = null): void {
 
+        if(this.isDragging)
+        {
+            return;
+        }
+
         event.stopPropagation();
         event.preventDefault();
 
@@ -590,6 +596,12 @@ export class ImageCropperComponent implements OnChanges, OnInit {
     @HostListener('document:mousemove', ['$event'])
     @HostListener('document:touchmove', ['$event'])
     moveImg(event: any): void {
+
+        if (this.isDragging)
+        {
+            return;
+        }
+        
         if (this.moveStart.active) {
             if (event.stopPropagation) {
                 event.stopPropagation();
@@ -861,11 +873,14 @@ export class ImageCropperComponent implements OnChanges, OnInit {
                 const scaleX = (this.transform.scale || 1) * (this.transform.flipH ? -1 : 1);
                 const scaleY = (this.transform.scale || 1) * (this.transform.flipV ? -1 : 1);
 
-                const translateX = (this.transform.transformX || 1);
-                const translateY = (this.transform.transformY || 1);
+                const translateX = (this.transform.transformX || 1)  * scaleX;
+                const translateY = (this.transform.transformY || 1)  * scaleY;
+
+                const sourceImageElement = this.sourceImage.nativeElement;
+                const ratio = this.transformedSize.width / sourceImageElement.offsetWidth;
 
                 ctx.setTransform(scaleX, 0, 0, scaleY, this.transformedSize.width / 2, this.transformedSize.height / 2);
-                ctx.translate(-(imagePosition.x1 - translateX) / scaleX, -(imagePosition.y1-translateY) / scaleY);
+                ctx.translate(-(imagePosition.x1 - (translateX * ratio)) / scaleX, -((imagePosition.y1-translateY * ratio)) / scaleY);
                 ctx.rotate((this.transform.rotate || 0) * Math.PI / 180);
                 ctx.drawImage(this.transformedImage, -this.transformedSize.width / 2, -this.transformedSize.height / 2);
 

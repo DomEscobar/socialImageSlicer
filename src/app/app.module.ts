@@ -14,6 +14,8 @@ import { ImageCropperModule } from '@cropper';
 import { StartComponent } from './containers/start/start.component';
 import { SelectionComponent } from './containers/header/selection/selection.component';
 import { DraggableDirective } from './containers/editor/draggable.directive';
+import { SettingsComponent } from './containers/editor/settings/settings.component';
+import { TruncatePipe } from './containers/header/selection/truncate.pipe';
 
 export function createTranslateLoader(http: HttpClient)
 {
@@ -31,7 +33,9 @@ export function createTranslateLoader(http: HttpClient)
     ImgUploadComponent,
     StartComponent,
     SelectionComponent,
-    DraggableDirective
+    DraggableDirective,
+    SettingsComponent,
+    TruncatePipe
   ],
   imports: [
     HttpClientModule,

@@ -1,11 +1,10 @@
 import { Component, ChangeDetectionStrategy, ViewChild, AfterViewInit, HostListener } from '@angular/core';
 import { EditorStoreService } from 'stores';
 import { ImageCroppedEvent } from '@cropper';
-import { BehaviorSubject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { EditorFacade } from 'facades';
-import { ImageCropperComponent, ImageTransform } from '@cropper';
+import { ImageCropperComponent } from '@cropper';
 import { Translate } from './draggable.directive';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-editor',
@@ -20,12 +19,7 @@ export class EditorComponent implements AfterViewInit
 
   public image$ = this.editorStoreService.image$;
   public format$ = this.editorStoreService.format$;
-
-  private readonly _crop = new BehaviorSubject<ImageCroppedEvent>(null);
-  public crop$ = this._crop.asObservable();
-
-  public transform: ImageTransform = { scale: 1, transformX: 0, transformY: 0 };
-  public isCropDragging: boolean;
+  public transform$ = this.editorStoreService.transform$;
 
   @HostListener("mousewheel", ["$event"])
   public windowScrolled($event: MouseWheelEvent)
@@ -36,12 +30,12 @@ export class EditorComponent implements AfterViewInit
   constructor(
     private editorFacade: EditorFacade,
     private editorStoreService: EditorStoreService)
-  { }
+  {
+  }
 
   ngAfterViewInit(): void
   {
     this.addEditorReloadListener();
-    this.addCroppListener();
   }
 
   private addEditorReloadListener(): void
@@ -59,43 +53,25 @@ export class EditorComponent implements AfterViewInit
     );
   }
 
-  private addCroppListener(): void
+  private zoom(isZoomIn: boolean): void
   {
-    this.crop$.pipe(
-      filter(cropperdata => cropperdata != null),
-      distinctUntilChanged((crop1, crop2) => JSON.stringify(crop1) === JSON.stringify(crop2))
-    ).subscribe(
-      cropperData =>
-      {
-        this.editorFacade.updateImageCropperData(cropperData);
-      }
-    );
+    this.editorStoreService.transform = {
+      ...this.editorStoreService.transform,
+      scale: this.editorStoreService.transform.scale + (isZoomIn ? .1 : -.1)
+    };
   }
 
   public moveImage(translate: Translate)
   {
-    this.transform = {
-      ...this.transform,
+    this.editorStoreService.transform = {
+      ...this.editorStoreService.transform,
       transformX: translate.x,
       transformY: translate.y,
     };
   }
 
-  private zoom(isZoomIn: boolean): void
-  {
-    this.transform = {
-      ...this.transform,
-      scale: this.transform.scale + (isZoomIn ? .1 : -.1)
-    };
-  }
-
   public crop(cropperData: ImageCroppedEvent): void
   {
-    this._crop.next(cropperData);
-  }
-
-  public onZoom(factor)
-  {
-
+    this.editorStoreService.cropperData = cropperData;
   }
 }

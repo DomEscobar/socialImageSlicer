@@ -1,0 +1,20 @@
+<div class="settings" (click)="setting.isVisible = ! setting.isVisible">
+    <label>settings</label>
+    <img class="settings-icon" #setting src="assets/img/settings.png" />
+</div>
+
+<ng-container *ngIf="setting.isVisible">
+    <div class="modal-background">
+        <div class="modal-content">
+            <div style="text-align: right; margin-bottom: 10px;">
+                <span style="cursor: pointer;" (click)="setting.isVisible = false">X</span>
+            </div>
+            <div class="selection fadeInDown">
+                <div (click)="renameImage(); setting.isVisible = false">Rename</div>
+                <div (click)="duplicateImage(); setting.isVisible = false">Duplicate</div>
+                <div (click)="removeImage(); setting.isVisible = false">Remove</div>
+            </div>
+
+        </div>
+    </div>
+</ng-container>

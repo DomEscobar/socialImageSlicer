@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { EditorStoreService } from 'stores';
-import { switchMap, distinctUntilChanged, catchError, filter, take, tap, map, delay } from 'rxjs/operators';
+import { switchMap, distinctUntilChanged, catchError, filter, take, tap, map, delay, debounceTime } from 'rxjs/operators';
 import { FormatData } from 'models';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, Subscription, throwError, Observer, empty } from 'rxjs';
@@ -31,9 +31,11 @@ export class PreviewComponent implements OnInit
   ngOnInit(): void
   {
     this.editorStoreService.format$.pipe(
+      tap(() => this.stopListener()),
       filter(format => format != null),
+      debounceTime(100),
       switchMap(format => this.fetchLayout(format).pipe(
-        catchError((error) => this.handleNoLayout()),
+        catchError((error) => this.handleNoLayout(error)),
       )))
       .subscribe(
         layoutStr =>
@@ -44,8 +46,7 @@ export class PreviewComponent implements OnInit
           setTimeout(() =>
           {
             this.addImageChandeHandler();
-          }
-            , 1000);
+          }, 1000);
         },
         error =>
         {
@@ -54,20 +55,36 @@ export class PreviewComponent implements OnInit
       );
   }
 
-  private setVisible(isVisible: boolean)
-  {
-    (<HTMLElement>this.elementRef.nativeElement).style.display = isVisible ? 'block' : 'none';
-    this.editorFacade.reloadEditor();
-  }
-
-  private handleNoLayout()
+  private stopListener(): void
   {
     if (this.imageChangeListener)
     {
       this.imageChangeListener.unsubscribe();
     }
+  }
+
+  private setVisible(isVisible: boolean)
+  {
+    if (isVisible && this.isVisible())
+    {
+      return;
+    }
+
+    (<HTMLElement>this.elementRef.nativeElement).style.display = isVisible ? 'block' : 'none';
+    this.editorFacade.reloadEditor();
+  }
+
+  private isVisible(): boolean
+  {
+    return (<HTMLElement>this.elementRef.nativeElement).style.display === 'block';
+  }
+
+  private handleNoLayout(error)
+  {
+    this.stopListener();
 
     this.setVisible(false);
+    console.log(error);
 
     this._layout.next(null);
 
@@ -76,10 +93,8 @@ export class PreviewComponent implements OnInit
 
   private addImageChandeHandler()
   {
-    this.imageChangeListener = this.editorStoreService.image$.pipe(
-      map(img => img.cropperData),
+    this.imageChangeListener = this.editorStoreService.cropperData$.pipe(
       filter(cropperData => cropperData != null),
-      distinctUntilChanged((cropData1, cropData2) => JSON.stringify(cropData1) === JSON.stringify(cropData2)),
     ).subscribe(
       cropperData =>
       {
@@ -100,6 +115,6 @@ export class PreviewComponent implements OnInit
 
   private fetchLayout(format: FormatData): Observable<string>
   {
-    return this.httpClient.get(`assets/providers/${ this.editorStoreService.selectedProvider }/layouts/${ format.name.replace(' ', '').split('.')[0] }.html`, { responseType: "text" });
+    return this.httpClient.get(`assets/providers/${ format.provider }/layouts/${ format.name.replace(' ', '').split('.')[0] }.html`, { responseType: "text" });
   }
 }

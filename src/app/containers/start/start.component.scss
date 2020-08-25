@@ -1,3 +1,5 @@
+@import "variables";
+
 .container {
     text-align: center;
     margin: 0;
@@ -8,10 +10,24 @@
     transform: translate(-50%, -50%);
     width: 100%;
 
+    h1 {
+        font-size: 2rem;
+        font-weight: normal;
+
+        @media (min-width: $breakpoint-medium) {
+            font-size: 2.3rem;
+        }
+    }
+
     img {
         max-width: 256px;
         padding: 40px;
         border-radius: 10px;
         box-shadow: 5px 12px 20px 1px #f5f0f0;
+
+        &:hover {
+            box-shadow: 5px 12px 20px 1px #d8cfcf;
+            cursor: pointer;
+        }
     }
 }

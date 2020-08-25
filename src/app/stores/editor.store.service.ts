@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { FormatData, ImageData } from 'models';
+import { ImageTransform, ImageCroppedEvent } from '@cropper';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +11,16 @@ export class EditorStoreService
   private readonly _image = new BehaviorSubject<ImageData>(null);
   public readonly image$ = this._image.asObservable();
 
+  private readonly _transform = new BehaviorSubject<ImageTransform>(null);
+  public readonly transform$ = this._transform.asObservable();
+  
+  private readonly _cropperData = new BehaviorSubject<ImageCroppedEvent>(null);
+  public cropperData$ = this._cropperData.asObservable();
+
   private readonly _format = new BehaviorSubject<FormatData>(null);
   public readonly format$ = this._format.asObservable();
 
-  public selectedProvider: string;
-
   constructor() { }
-
-  private updateImageFormat(formatData: FormatData): void
-  {
-    const img = this.image;
-    img.formatData = formatData;
-    this.image = img;
-  }
 
   public get image(): ImageData
   {
@@ -31,11 +29,6 @@ export class EditorStoreService
 
   public set image(imageData: ImageData)
   {
-    if (this.formatData)
-    {
-      imageData.formatData = this.formatData;
-    }
-
     this._image.next(imageData);
   }
 
@@ -46,11 +39,26 @@ export class EditorStoreService
 
   public set formatData(formatData: FormatData)
   {
-    if (this.image)
-    {
-      this.updateImageFormat(formatData);
-    }
-
     this._format.next(formatData);
+  }
+
+  public get transform(): ImageTransform
+  {
+    return this._transform.getValue();
+  }
+
+  public set transform(imageTransform: ImageTransform)
+  {
+    this._transform.next(imageTransform);
+  }
+
+  public get cropperData(): ImageCroppedEvent
+  {
+    return this._cropperData.getValue();
+  }
+
+  public set cropperData(imageCroppedEvent: ImageCroppedEvent)
+  {
+    this._cropperData.next(imageCroppedEvent);
   }
 }

@@ -10,9 +10,9 @@ nav {
     box-shadow: 3px 9px 10px 0px #e4e4e4;
     position: fixed;
     height: 50px;
-    z-index: 1;
+    z-index: 3;
     width: 100%;
-    
+
     .nav-item {
         display: inline-block;
         padding: 10px;
@@ -24,6 +24,7 @@ nav {
             vertical-align: top;
             line-height: 30px;
             margin-left: 10px;
+            cursor: pointer;
 
             @media (max-width: $breakpoint-mobile) {
                 display: none;
@@ -35,6 +36,7 @@ nav {
         width: 250px;
         margin: auto;
         display: block;
+
 
         @media (max-width: $breakpoint-mobile) {
             width: 170px;

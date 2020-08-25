@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, from, throwError, Observer } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { FormatData } from 'models';
-import { tap, concatMap, take, catchError, map, finalize, mergeMap } from 'rxjs/operators';
+import { concatMap, take, catchError, map, finalize, mergeMap } from 'rxjs/operators';
 import { Popup } from '@core';
 import { EditorStoreService } from 'stores';
 

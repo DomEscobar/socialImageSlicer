@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { EditorFacade } from 'facades';
 import { IUploadedFile, ExportService } from '@core';
+import { EditorStoreService, ImagesStoreService } from 'stores';
+import { Popup } from '../../@core/components/popup/popup.component';
+import { GUID } from 'utils';
 
 @Component({
   selector: 'app-header',
@@ -26,4 +29,5 @@ export class HeaderComponent implements OnInit
   {
     this.exportService.exportImages();
   }
+
 }

@@ -1,17 +1,20 @@
 <ng-container *ngIf="(image$ | async) as image">
     <ng-container *ngIf="(format$ | async) as format">
-        <div appDraggable (translate)="moveImage($event)">
+        <div #drag appDraggable (translate)="moveImage($event)" [isDragging]="drag.isDragging">
             <image-cropper 
             [roundCropper]="format.round"
             [aspectRatio]="format.width / format.height"
             (imageCropped)="crop($event)"
-            [transform]="transform"
+            [transform]="transform$ | async"
             [cropper]="image?.cropperData?.cropperPosition"
             (fileChangeEvent)="crop($event)"
             [imageBase64]="image.source"
-            (moveStart)="isCropDragging = $event.active"
+            [isDragging]="drag.isDragging"
             >
-        </image-cropper>
-    </div>
+            </image-cropper>
+         </div>
+    
+        <app-settings></app-settings>
     </ng-container>
 </ng-container>
+

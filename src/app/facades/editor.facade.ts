@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Popup, IUploadedFile } from '@core';
-import { ImageData } from 'models';
+import { ImageData, FormatData } from 'models';
 import { EditorStoreService, ImagesStoreService } from 'stores';
 import { Subject } from 'rxjs';
-import { ImageCroppedEvent } from '@cropper';
+import { Object } from 'utils';
 2
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,9 @@ export class EditorFacade
 
   constructor(
     private editorStoreService: EditorStoreService,
-    private imagesStoreService: ImagesStoreService) { }
+    private imagesStoreService: ImagesStoreService)
+  {
+  }
 
   public initEditor(uploadedImages: IUploadedFile[])
   {
@@ -34,16 +36,26 @@ export class EditorFacade
     this._refresh.next();
   }
 
-  public updateImageCropperData(cropperData: ImageCroppedEvent): void
+  public assignEditorDatatoImage(): void
   {
+    if (!this.editorStoreService.image)
+    {
+      return;
+    }
+
     const img = this.editorStoreService.image;
-    img.cropperData = cropperData;
+    img.cropperData = this.editorStoreService.cropperData;
+    img.formatData = this.editorStoreService.formatData || img.formatData;
+    img.imageTransform = this.editorStoreService.transform || img.imageTransform;
+    
     this.editorStoreService.image = img;
   }
 
   public selectImage(imgData: ImageData)
   {
-    const img = this.imagesStoreService.images.find(o => o.guid == imgData.guid)
+    this.assignEditorDatatoImage();
+
+    const img = this.imagesStoreService.images.find(o => o.guid === imgData.guid);
 
     if (!img)
     {
@@ -51,7 +63,10 @@ export class EditorFacade
       return;
     }
 
+    this.editorStoreService.formatData = img.formatData || this.editorStoreService.formatData;
     this.editorStoreService.image = img;
+    this.editorStoreService.cropperData = img.cropperData;
+    this.editorStoreService.transform = img.imageTransform;
   }
 
   public addUploadedImages(uploadedImages: IUploadedFile[]): void

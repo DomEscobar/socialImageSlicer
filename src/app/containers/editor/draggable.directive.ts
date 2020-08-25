@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Directive, ElementRef, Output, EventEmitter, Input } from '@angular/core';
 
 @Directive({
   selector: '[appDraggable]'
@@ -12,28 +12,12 @@ export class DraggableDirective
   initialY;
   xOffset = 0;
   yOffset = 0;
-  active;
 
   @Output()
   translate: EventEmitter<Translate> = new EventEmitter();
 
-  _isCropping : boolean;
-
-  @Output()
-  set isCropping(isCropping : boolean)
-  {
-    if(isCropping)
-    {
-      this.active = false;
-    }
-
-    this._isCropping = isCropping;
-  }
-
-  get isCropping() : boolean
-  {
-    return this._isCropping
-  }
+  @Input()
+  isDragging: boolean;
 
   constructor(private elementRef: ElementRef)
   {
@@ -50,7 +34,7 @@ export class DraggableDirective
 
   dragStart = (e) =>
   {
-    if(this.isCropping || this.active)
+    if (this.isDragging)
     {
       return;
     }
@@ -65,7 +49,7 @@ export class DraggableDirective
       this.initialY = e.clientY - this.yOffset;
     }
 
-    this.active = true;
+    this.isDragging = true;
   }
 
   dragEnd = (e) =>
@@ -73,12 +57,12 @@ export class DraggableDirective
     this.initialX = this.currentX;
     this.initialY = this.currentY;
 
-    this.active = false;
+    this.isDragging = false;
   }
 
   drag = (e) =>
   {
-    if (this.active)
+    if (this.isDragging)
     {
       e.preventDefault();
 

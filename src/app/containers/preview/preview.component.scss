@@ -4,6 +4,23 @@ h3 {
     margin-top: 0px;
     color: #ababab;
     text-align: center;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    &:before,
+    &:after {
+        content: "";
+        border-top: 2px solid #cecece;
+        margin: 0 20px 0 0;
+        flex: 1 0 20px;
+    }
+
+    &:after {
+        margin: 0 0 0 20px;
+    }
 }
 
 :host {
