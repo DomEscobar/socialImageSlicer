@@ -13,12 +13,14 @@ export class EditorStoreService
 
   private readonly _transform = new BehaviorSubject<ImageTransform>(null);
   public readonly transform$ = this._transform.asObservable();
-  
+
   private readonly _cropperData = new BehaviorSubject<ImageCroppedEvent>(null);
   public cropperData$ = this._cropperData.asObservable();
 
   private readonly _format = new BehaviorSubject<FormatData>(null);
   public readonly format$ = this._format.asObservable();
+
+  public aspetRatio = true;
 
   constructor() { }
 
@@ -60,5 +62,20 @@ export class EditorStoreService
   public set cropperData(imageCroppedEvent: ImageCroppedEvent)
   {
     this._cropperData.next(imageCroppedEvent);
+  }
+
+  public assignEditorDatatoImage(): void
+  {
+    if (!this.image)
+    {
+      return;
+    }
+
+    const img = this.image;
+    img.cropperData = this.cropperData;
+    img.formatData = this.formatData || img.formatData;
+    img.imageTransform = this.transform || img.imageTransform;
+
+    this.image = img;
   }
 }

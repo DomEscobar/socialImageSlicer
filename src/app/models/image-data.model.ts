@@ -6,7 +6,7 @@ export class ImageData
 {
     public formatData: FormatData;
     public cropperData: ImageCroppedEvent;
-    public imageTransform: ImageTransform = { scale: 1, transformX: 0, transformY: 0 };
+    public imageTransform: ImageTransform;
 
     constructor(
         public name: string,
@@ -14,5 +14,13 @@ export class ImageData
         public guid: string = GUID.create()
     )
     {
+        this.reset();
+    }
+
+    public reset()
+    {
+        this.imageTransform = { scale: 1, transformX: 0, transformY: 0 };
+        this.formatData = null;
+        this.cropperData = null;
     }
 }

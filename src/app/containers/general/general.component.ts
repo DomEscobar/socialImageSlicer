@@ -4,11 +4,11 @@ import { GUID } from 'utils';
 import { Popup } from '@core';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  selector: 'app-general',
+  templateUrl: './general.component.html',
+  styleUrls: ['./general.component.scss']
 })
-export class SettingsComponent
+export class GeneralComponent
 {
   constructor(
     private imagesStoreService: ImagesStoreService,

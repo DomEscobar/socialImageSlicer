@@ -4,6 +4,7 @@
             <image-cropper 
             [roundCropper]="format.round"
             [aspectRatio]="format.width / format.height"
+            [maintainAspectRatio]="maintainAspectRatio"
             (imageCropped)="crop($event)"
             [transform]="transform$ | async"
             [cropper]="image?.cropperData?.cropperPosition"
@@ -14,7 +15,7 @@
             </image-cropper>
          </div>
     
-        <app-settings></app-settings>
+         <app-editor-settings></app-editor-settings>
     </ng-container>
 </ng-container>
 

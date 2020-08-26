@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ImagesStoreService } from 'stores';
+import { ImagesStoreService, EditorStoreService } from 'stores';
 import * as JSZip from 'jszip';
 import * as FileSaver from 'file-saver';
 import { Observable, Observer, throwError, from } from 'rxjs';
 import { ImageData } from 'models';
-import { concatMap, catchError, filter } from 'rxjs/operators';
+import { concatMap, catchError, filter, finalize, take } from 'rxjs/operators';
 import { Popup } from '../components/popup/popup.component';
 
 @Injectable({
@@ -13,12 +13,14 @@ import { Popup } from '../components/popup/popup.component';
 export class ExportService
 {
 
-  constructor(private imagesStoreService: ImagesStoreService) { }
-
-  //TODO :  JSZIP LIb
+  constructor(
+    private editorStoreService : EditorStoreService,
+    private imagesStoreService: ImagesStoreService) { }
 
   public async exportImages(): Promise<void>
   {
+    this.editorStoreService.assignEditorDatatoImage();
+
     if (this.imagesStoreService.images.length == 1)
     {
       await this.exportAsImageAsync();
@@ -30,19 +32,26 @@ export class ExportService
 
     from(this.imagesStoreService.images).pipe(
       filter(image => image.cropperData != null && image.formatData != null),
-      concatMap(image => this.resizeImage(image).pipe(catchError(error => throwError(error))))
+      concatMap(image => this.resizeImage(image).pipe(catchError(error => throwError(error)))),
+      take(this.imagesStoreService.images.length),
+      finalize(() =>
+      {
+        zip.generateAsync({ type: 'blob' }).then((content) =>
+        {
+          FileSaver.saveAs(content, 'sliced-images.zip');
+        });
+      })
     ).subscribe(
       image =>
       {
         img.file(image.name, image.cropperData.base64.split(',')[1], { base64: true });
       },
-      error => Popup.error('Error while exporting the images, please reload the page and try again')
+      error =>
+      {
+        Popup.error('Error while exporting the images, please reload the page and try again')
+        console.log(error);
+      }
     );
-
-    await zip.generateAsync({ type: 'blob' }).then((content) =>
-    {
-      FileSaver.saveAs(content, 'sliced-images.zip');
-    });
   }
 
   private async exportAsImageAsync(): Promise<void>
@@ -65,7 +74,7 @@ export class ExportService
       const img = new Image();
       img.onload = () =>
       {
-        const {width, height} = image.formatData;
+        const { width, height } = image.formatData;
 
         canvas.width = width;
         canvas.height = height;

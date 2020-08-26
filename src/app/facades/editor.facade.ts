@@ -36,6 +36,16 @@ export class EditorFacade
     this._refresh.next();
   }
 
+  public reset(): void
+  {
+    const img = this.editorStoreService.image;
+    img.reset();
+    this.editorStoreService.image = img;
+    this.editorStoreService.cropperData = null;
+    this.editorStoreService.transform = img.imageTransform;
+    this._refresh.next();
+  }
+
   public assignEditorDatatoImage(): void
   {
     if (!this.editorStoreService.image)

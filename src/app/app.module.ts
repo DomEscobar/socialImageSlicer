@@ -14,8 +14,10 @@ import { ImageCropperModule } from '@cropper';
 import { StartComponent } from './containers/start/start.component';
 import { SelectionComponent } from './containers/header/selection/selection.component';
 import { DraggableDirective } from './containers/editor/draggable.directive';
-import { SettingsComponent } from './containers/editor/settings/settings.component';
 import { TruncatePipe } from './containers/header/selection/truncate.pipe';
+import { GeneralComponent } from './containers/general/general.component';
+import { EditorSettingsComponent } from './containers/editor/editor-settings/editor-settings.component';
+import { FormsModule } from '@angular/forms';
 
 export function createTranslateLoader(http: HttpClient)
 {
@@ -34,12 +36,14 @@ export function createTranslateLoader(http: HttpClient)
     StartComponent,
     SelectionComponent,
     DraggableDirective,
-    SettingsComponent,
-    TruncatePipe
+    GeneralComponent,
+    TruncatePipe,
+    EditorSettingsComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
+    FormsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

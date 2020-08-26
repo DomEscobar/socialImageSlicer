@@ -74,4 +74,9 @@ export class EditorComponent implements AfterViewInit
   {
     this.editorStoreService.cropperData = cropperData;
   }
+
+  public get maintainAspectRatio(): boolean
+  {
+    return this.editorStoreService.aspetRatio;
+  }
 }

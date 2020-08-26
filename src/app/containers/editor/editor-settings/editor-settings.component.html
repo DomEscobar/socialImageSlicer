@@ -1,0 +1,10 @@
+<div #setting>
+
+    <input *ngIf="setting.isZoom" min="0" max="3" [ngModel]="scaleFactor" (ngModelChange)="zoom($event)" step="0.05"
+        type="range">
+    <div class="settings-container">
+        <img title="Reset" (click)="reset()" src="assets/img/reset.png">
+        <img title="Zoom" (click)="setting.isZoom = !setting.isZoom" src="assets/img/zoom.png">
+        <img title="Aspect ratio" (click)="toggleAspectRatio()" src="assets/img/ratio.png">
+    </div>
+</div>

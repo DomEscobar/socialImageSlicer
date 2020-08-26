@@ -3,38 +3,17 @@
 :host {
     width: 100%;
     display: block;
-    padding: 5px;
-    margin-top: 25px;
-    text-align: right;
+    margin-top: 10px;
+    text-align: center;
 }
 
-.settings {
+.generals {
     opacity: 0.5;
     cursor: pointer;
     display: inline-block;
-    
-    label {
-        vertical-align: super;
-        margin-right: 5px;
-        font-size: 12px;
-    }
-
-    .settings-icon {
-        width: 16px;
-    }
 
     &:hover {
         opacity: 1;
-    }
-
-    @media (max-width: $breakpoint-mobile) {
-        .settings-icon {
-            width: 12px;
-        }
-
-        label {
-            display: none;
-        }
     }
 }
 

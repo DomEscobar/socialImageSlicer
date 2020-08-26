@@ -1,0 +1,19 @@
+<div #general class="generals" (click)="general.isVisible = ! general.isVisible">
+    <img style="height: 16px;" src="assets/img/more.png" />
+</div>
+
+<ng-container *ngIf="general.isVisible">
+    <div class="modal-background">
+        <div class="modal-content" style="margin-top: 12%;">
+            <div style="text-align: right; margin-bottom: 10px;">
+                <span style="cursor: pointer;" (click)="general.isVisible = false">X</span>
+            </div>
+            <div class="selection fadeInDown">
+                <div (click)="renameImage(); general.isVisible = false">Rename</div>
+                <div (click)="duplicateImage(); general.isVisible = false">Duplicate</div>
+                <div (click)="removeImage(); general.isVisible = false">Remove</div>
+            </div>
+
+        </div>
+    </div>
+</ng-container>
