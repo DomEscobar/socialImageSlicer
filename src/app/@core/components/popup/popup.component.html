@@ -1,5 +1,5 @@
 <ng-container *ngIf="popupData$ | async as popupData">
-    <div class="popup-bg fadeInDown {{popupData.type}}" (click)="hide();">
+    <div class="popup-bg fadeInDown {{popupData.type}}" (click)="hide();" translate>
         {{popupData.text}}
     </div>
 </ng-container>

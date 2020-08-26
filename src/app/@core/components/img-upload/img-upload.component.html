@@ -16,11 +16,11 @@
 
                 <ng-template #previewImages>
                     <ng-container *ngIf="state == uploadStates.FINISH;else loading">
-                        <p class="success-text flip-in" translate>Successfull loaded, please wait.</p>
+                        <p class="success-text flip-in" translate>Image/s successfull loaded</p>
                     </ng-container>
 
                     <ng-template #loading>
-                        <p class="loading-text">
+                        <p class="loading-text" translate>
                             Loading images...
                         </p>
                     </ng-template>

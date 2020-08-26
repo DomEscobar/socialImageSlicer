@@ -1,3 +1,9 @@
 {
-    "Successfull loaded, please wait." : "Erfolgreich geladen, bitte warten."
+    "Loading images...": "Lade Bilder...",
+    "Image/s successfull loaded": "Bild/er erfolgreich geladen!",
+    "Select images": "Bilder auswählen",
+    "Add images": "Bilder hinzufügen",
+    "Export": "Exportieren",
+    "Live preview": "Live Vorschau",
+    "Formats": "Formate"
 }

@@ -14,7 +14,7 @@
 
         <ng-container *ngIf="selectedProvider">
             <ul class="second-level-menu fadeInLeft">
-                <li *ngFor="let format of getFormats()" (click)="selectFormat(format)">
+                <li class="pointer" *ngFor="let format of getFormats()" (click)="selectFormat(format)">
                     <div>
                         <img src="assets/providers/{{selectedProvider}}/img/{{format.name}}.jpg" />
                         <label>{{format.name}} </label>

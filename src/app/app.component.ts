@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IUploadedFile } from '@core';
 import { EditorStoreService } from 'stores';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +12,13 @@ import { EditorStoreService } from 'stores';
 export class AppComponent
 {
   constructor(
+    private translate: TranslateService,
     public editorStoreService: EditorStoreService)
   {
+    this.translate.setDefaultLang('de');
+    this.translate.use(this.translate.getBrowserLang());
   }
-  
+
   public addImages(uploadedImages: IUploadedFile[]): void
   {
   }

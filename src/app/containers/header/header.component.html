@@ -1,17 +1,16 @@
-<nav>
-    <div class="nav-item" style="float:left">
+<nav >
+    <div class="nav-item pointer" style="float:left">
         <app-img-upload (onFinish)="addUploadedImages($event)">
-            <img src="assets/img/addImage.png"> <label> Add images</label>
+            <img src="assets/img/addImage.png"> <label translate> Add images</label>
         </app-img-upload>
     </div>
 
-    <div class="nav-item" style="float:right;" (click)="exportImages()">
-        <label class="ci-text" style="margin-right: 10px;"> Export</label>
+    <div class="nav-item pointer" style="float:right;" (click)="exportImages()">
+        <label class="ci-text" style="margin-right: 10px;" translate> Export</label>
         <img style="width: 24px;" src="assets/img/download.png">
     </div>
 
-    <div class="nav-item centered">
-
+    <div class="nav-item centered pointer">
         <app-selection></app-selection>
     </div>
 </nav>
