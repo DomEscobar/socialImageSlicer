@@ -1,12 +1,22 @@
 [
   {
     "name": "Profile Picture",
-    "width": "180",
-    "height": "180"
+    "width": "200",
+    "height": "200"
   },
   {
     "name": "Header Picture",
     "width": "1500",
     "height": "500"
+  },
+  {
+    "name": "Tweet Single",
+    "width": "1200",
+    "height": "675"
+  },
+  {
+    "name": "Tweet Two",
+    "width": "700",
+    "height": "800"
   }
 ]

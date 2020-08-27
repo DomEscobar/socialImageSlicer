@@ -1,44 +1,47 @@
-@import 'variables';
+@import "variables";
 
-.modal-content
-{
-    display: flex;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-    
-     p{
-        width: 100%;
-        font-size : 12px;
-      }
+.modal-content {
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
 
-      .loading-text{
-          font-size: 14px;
-          text-align: center;
-      }
+  p {
+    width: 100%;
+    font-size: 12px;
+  }
 
-      .success-text{
-        font-size: 20px;
-        text-align: center;
-        color:$success-color;
-      }
+  .loading-text {
+    font-size: 14px;
+    text-align: center;
+  }
 
-      .error-text{
-        font-size: 30px;
-        text-align: center;
-        color:$error-color;
-      }
+  .success-text {
+    font-size: 20px;
+    text-align: center;
+    color: $success-color;
+  }
 
-    .preview-item
-    {
-        max-width: 256px;
-        min-width: 64px;
-        padding:10px;
-        flex: 1;
-        word-break: break-word;
-        margin: auto;
+  .error-text {
+    font-size: 30px;
+    text-align: center;
+    color: $error-color;
+  }
 
-        img{
-            width: 100%;
-        }
+  .preview-item {
+    max-width: 256px;
+    min-width: 64px;
+    padding: 10px;
+    flex: 1;
+    word-break: break-word;
+    margin: auto;
+
+    img {
+      width: 100%;
     }
+  }
+
+  button {
+    width: 100px;
+    margin: auto;
+  }
 }

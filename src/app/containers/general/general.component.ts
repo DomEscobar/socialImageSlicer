@@ -32,7 +32,7 @@ export class GeneralComponent
       img.name = `${ img.name.split('.')[0] } ${ GUID.create().substr(0, 3) }.${ img.name.split('.')[1] }`;
       img.guid = GUID.create();
       this.imagesStoreService.images = [...this.imagesStoreService.images, img];
-      Popup.info('Duplicated image, see in selection');
+      Popup.info('Image duplicated, see in selection');
     } catch (error)
     {
       Popup.error('Error while trying to duplicate the image');

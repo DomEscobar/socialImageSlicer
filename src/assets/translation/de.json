@@ -5,5 +5,15 @@
     "Add images": "Bilder hinzufügen",
     "Export": "Exportieren",
     "Live preview": "Live Vorschau",
-    "Formats": "Formate"
+    "Formats": "Formate",
+    "Duplicate": "Duplizieren",
+    "Please enter a name": "Bitte einen neuen Namen eigeben",
+    "Image duplicated, see in selection": "Bild dupliziert, siehe in der Auswahl",
+    "Error while trying to duplicate the image": "Fehler beim Versuch, das Bild zu duplizieren",
+    "Remove": "Entfernen",
+    "Rename": "Umbenennen",
+    "mage removed": "Bild entfernt",
+    "File is no image": "Datei ist kein Bild",
+    "Inavlid file format" : "Ungültiges Bildformat",
+    "Inavlid file size" : "Ungültige Bildgröße"
 }

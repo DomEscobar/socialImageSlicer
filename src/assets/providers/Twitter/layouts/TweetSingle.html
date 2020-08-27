@@ -1,0 +1,64 @@
+<style>
+    .prev-container {
+        max-width: 580px;
+        position: relative;
+        margin: auto;
+        display: flex;
+    }
+
+    .profile-picture {
+        max-width: 49px;
+        height: 49px;
+        border-radius: 50%;
+        border: 2px solid white;
+        flex: 1;
+        margin-right: 20px;
+    }
+
+    .prev-h5 {
+        font-weight: bold;
+        font-size: 14px;
+        margin-top: 0px;
+    }
+
+    .prev-content {
+        flex: 1;
+    }
+
+    #TweetSingle {
+        width: 500px;
+        height: 265px;
+        overflow: hidden;
+        position: relative;
+        border-radius: 20px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        #TweetSingle {
+            width: 267px;
+            height: 150px;
+        }
+
+        .hide-sm {
+            display: none;
+        }
+
+        .prev-content p {
+            font-size: 12px;
+        }
+    }
+</style>
+
+<div class="prev-container">
+    <img class="profile-picture hide-sm"
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mOc+h8AAi8BltbblRQAAAAASUVORK5CYII=" />
+
+    <div class="prev-content">
+        <h5 class="prev-h5">User 1929239</h5>
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+            dolore magna aliquyam erat, sed diam voluptua.</p>
+
+        <img id="TweetSingle"
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPUuPr/PwAGJgL9mdv/dgAAAABJRU5ErkJggg==" />
+    </div>
+</div>

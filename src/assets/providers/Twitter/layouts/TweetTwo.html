@@ -1,0 +1,74 @@
+<style>
+    .pev-container {
+        max-width: 580px;
+        position: relative;
+        margin: auto;
+        display: flex;
+    }
+
+    .profile-picture {
+        max-width: 49px;
+        height: 49px;
+        border-radius: 50%;
+        border: 2px solid white;
+        flex: 1;
+        margin-right: 20px;
+    }
+
+    .prev-h5 {
+        font-weight: bold;
+        font-size: 14px;
+        margin-top: 0px;
+    }
+
+    .prev-content {
+        flex: 1;
+    }
+
+    .shared-container {
+        display: flex;
+        border-radius: 20px;
+        overflow: hidden;
+        width: 500px;
+        height: 265px;
+    }
+
+    .shared-container img {
+        flex: 1;
+        width: 50%;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .shared-container {
+            width: 267px;
+            height: 150px;
+        }
+
+        .hide-sm {
+            display: none;
+        }
+
+        .prev-content p {
+            font-size: 12px;
+        }
+    }
+</style>
+
+<div class="pev-container">
+    <img class="profile-picture hide-sm"
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mOc+h8AAi8BltbblRQAAAAASUVORK5CYII=" />
+
+    <div class="prev-content">
+        <h5 class="prev-h5">User 1929239</h5>
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+            dolore magna aliquyam erat, sed diam voluptua.</p>
+
+        <div class="shared-container">
+            <img id="TweetTwo" style="margin-right: 2.5px;"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPUuPr/PwAGJgL9mdv/dgAAAABJRU5ErkJggg==" />
+
+            <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mOc+h8AAi8BltbblRQAAAAASUVORK5CYII=" />
+        </div>
+    </div>
+</div>

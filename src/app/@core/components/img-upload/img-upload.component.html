@@ -9,7 +9,7 @@
             <div class="modal-content">
 
                 <ng-container *ngIf="state == uploadStates.ERROR; else previewImages">
-                    <p class="error-text flip-in"> {{uploadError}}</p>
+                    <p class="error-text flip-in" translate> {{uploadError}}</p>
                     <button (click)="setState(uploadStates.DEFAULT)">Ok</button>
                 </ng-container>
 
