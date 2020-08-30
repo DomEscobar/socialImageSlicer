@@ -8,7 +8,7 @@
             <li *ngFor="let provider of providers$ | async" (click)="selectProvider(provider)"
                 [class.active]="selectedProvider == provider">
                 <img src="assets/providers/{{provider}}/icon.svg" />
-                <label> {{provider}} </label>
+                <label style="display: block;"> {{provider}} </label>
             </li>
         </ul>
 

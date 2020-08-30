@@ -48,7 +48,7 @@ export class FormatsMenuFacade
 
   private getDefaultFormat(): FormatData
   {
-    return this.providerMap.get('Custom')[0];
+    return this.providerMap.get('Other')[0];
   }
 
   public initMenu(): void

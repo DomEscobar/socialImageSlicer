@@ -6,6 +6,8 @@ import { Observable, Observer, throwError, from } from 'rxjs';
 import { ImageData } from 'models';
 import { concatMap, catchError, filter, finalize, take } from 'rxjs/operators';
 import { Popup } from '../components/popup/popup.component';
+import { resizeCanvas } from '@cropper';
+import { format } from 'path';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class ExportService
 {
 
   constructor(
-    private editorStoreService : EditorStoreService,
+    private editorStoreService: EditorStoreService,
     private imagesStoreService: ImagesStoreService) { }
 
   public async exportImages(): Promise<void>
@@ -74,13 +76,14 @@ export class ExportService
       const img = new Image();
       img.onload = () =>
       {
-        const { width, height } = image.formatData;
+        const { width, height } = { width : img.width, height : img.height};
 
         canvas.width = width;
         canvas.height = height;
         ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, width, height);
 
-        image.cropperData.base64 = canvas.toDataURL('image/jpg', 0.92)
+        resizeCanvas(canvas, image.formatData.width, image.formatData.height);
+        image.cropperData.base64 = canvas.toDataURL('image/jpg', 0.92);
         observer.next(image);
         observer.complete();
       }
