@@ -1,0 +1,84 @@
+<style>
+    .header-prev {
+        max-width: 600px;
+        position: relative;
+        margin: auto;
+        max-height: 350px;
+        padding: 20px;
+        background: white;
+        display: flex;
+    }
+
+    #ProfilePicture {
+        max-width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        flex: 1;
+    }
+
+    .prev-content {
+        flex: 1;
+        vertical-align: top;
+        margin-left: 15px;
+        display: flex;
+    }
+
+    .post-content {
+        margin: 0px 30px;
+        height: 80px;
+        margin-top: 20px;
+        text-align: center;
+        color: #000;
+    }
+
+    .post-content label {
+        color: lightgray;
+    }
+
+    .post-content div {
+        font-size: 21px;
+        font-weight: 400;
+    }
+
+    .follow-btn {
+        background: #0095f6;
+        padding: 10px;
+        text-align: center;
+    }
+
+    @media only screen and (max-width: 600px) {
+        #ProfilePicture {
+            max-width: 80px;
+            height: 80px;
+        }
+
+        .post-content div {
+            font-size: 17px;
+        }
+    }
+</style>
+
+<div class="header-prev">
+
+    <img id="ProfilePicture"
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPUuPr/PwAGJgL9mdv/dgAAAABJRU5ErkJggg==" />
+
+    <div class="prev-content">
+
+        <div class="post-content">
+            <div>4000</div>
+            <label>posts</label>
+        </div>
+
+        <div class="post-content">
+            <div>40m</div>
+            <label>followers</label>
+        </div>
+
+        <div class="post-content">
+            <div>122</div>
+            <label>following</label>
+        </div>
+
+    </div>
+</div>

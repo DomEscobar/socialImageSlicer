@@ -7,6 +7,7 @@ import { Observable, BehaviorSubject, Subscription, throwError, Observer, empty 
 import { Popup } from '@core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { EditorFacade } from 'facades';
+import { PreviewFacade } from './../../facades/preview.facade';
 
 @Component({
   selector: 'app-preview',
@@ -16,51 +17,23 @@ import { EditorFacade } from 'facades';
 })
 export class PreviewComponent implements OnInit
 {
-  private readonly _layout = new BehaviorSubject<SafeHtml>(null);
-  public readonly layout$ = this._layout.asObservable();
+  public layout$: Observable<SafeHtml>;
 
-  private imageChangeListener: Subscription;
 
   constructor(
-    private domSanitizer: DomSanitizer,
-    private elementRef: ElementRef,
-    private httpClient: HttpClient,
-    private editorFacade: EditorFacade,
-    private editorStoreService: EditorStoreService) { }
+    private readonly elementRef: ElementRef,
+    private readonly previewFacade: PreviewFacade,
+    private readonly editorFacade: EditorFacade) { }
 
   ngOnInit(): void
   {
-    this.editorStoreService.format$.pipe(
-      tap(() => this.stopListener()),
-      filter(format => format != null),
-      debounceTime(100),
-      switchMap(format => this.fetchLayout(format).pipe(
-        catchError((error) => this.handleNoLayout(error)),
-      )))
-      .subscribe(
-        layoutStr =>
-        {
-          this.setVisible(true);
-          this._layout.next(this.domSanitizer.bypassSecurityTrustHtml(layoutStr));
-          // Mess callback until view rendered
-          setTimeout(() =>
-          {
-            this.addImageChandeHandler();
-          }, 1000);
-        },
-        error =>
-        {
-          Popup.error('Layout error');
-        }
-      );
-  }
+    this.layout$ = this.previewFacade.layout$;
+    this.previewFacade.setElement(this.elementRef.nativeElement);
 
-  private stopListener(): void
-  {
-    if (this.imageChangeListener)
+    this.previewFacade.visible$.subscribe(visible =>
     {
-      this.imageChangeListener.unsubscribe();
-    }
+      this.setVisible(visible);
+    });
   }
 
   private setVisible(isVisible: boolean)
@@ -77,44 +50,5 @@ export class PreviewComponent implements OnInit
   private isVisible(): boolean
   {
     return (<HTMLElement>this.elementRef.nativeElement).style.display === 'block';
-  }
-
-  private handleNoLayout(error)
-  {
-    this.stopListener();
-
-    this.setVisible(false);
-    console.log(error);
-
-    this._layout.next(null);
-
-    return empty();
-  }
-
-  private addImageChandeHandler()
-  {
-    this.imageChangeListener = this.editorStoreService.cropperData$.pipe(
-      filter(cropperData => cropperData != null),
-    ).subscribe(
-      cropperData =>
-      {
-        const element = <HTMLElement>this.elementRef.nativeElement;
-        const imgElement = <HTMLImageElement>element.querySelector(`#${ this.editorStoreService.formatData.name.replace(' ', '') }`);
-
-        if (!imgElement)
-        {
-          console.log('Image element not found');
-          return;
-        }
-
-        imgElement.src = cropperData.base64;
-      },
-      error => console.log(error)
-    );
-  }
-
-  private fetchLayout(format: FormatData): Observable<string>
-  {
-    return this.httpClient.get(`assets/providers/${ format.provider }/layouts/${ format.name.replace(' ', '').split('.')[0] }.html`, { responseType: "text" });
   }
 }
