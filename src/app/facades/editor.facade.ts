@@ -57,7 +57,7 @@ export class EditorFacade
     img.cropperData = this.editorStoreService.cropperData;
     img.formatData = this.editorStoreService.formatData || img.formatData;
     img.imageTransform = this.editorStoreService.transform || img.imageTransform;
-    
+
     this.editorStoreService.image = img;
   }
 

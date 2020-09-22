@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormatData } from 'models';
-import { FormatsMenuFacade } from 'facades';
+import { FormatsMenuFacade, EditorFacade } from 'facades';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -9,22 +9,19 @@ import { Observable } from 'rxjs';
   styleUrls: ['./formats-menu.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormatsMenuComponent implements OnInit
-{
+export class FormatsMenuComponent implements OnInit {
   public selectedProvider: string;
 
   constructor(
+    private readonly _editorFacade: EditorFacade,
     private formatsMenuFacade: FormatsMenuFacade) { }
 
-  ngOnInit(): void
-  {
+  ngOnInit(): void {
     this.formatsMenuFacade.initMenu();
   }
 
-  public selectProvider(provider: string): void
-  {
-    if (provider === this.selectedProvider)
-    {
+  public selectProvider(provider: string): void {
+    if (provider === this.selectedProvider) {
       this.selectedProvider = null;
       return;
     }
@@ -32,19 +29,17 @@ export class FormatsMenuComponent implements OnInit
     this.selectedProvider = provider;
   }
 
-  public get providers$(): Observable<string[]>
-  {
-    return this.formatsMenuFacade.providers$
+  public get providers$(): Observable<string[]> {
+    return this.formatsMenuFacade.providers$;
   }
 
-  public getFormats(): FormatData[]
-  {
+  public getFormats(): FormatData[] {
     return this.formatsMenuFacade.providerMap.get(this.selectedProvider);
   }
 
-  public selectFormat(format: FormatData): void
-  {
-    format.provider = this.selectedProvider
+  public selectFormat(format: FormatData): void {
+    format.provider = this.selectedProvider;
     this.formatsMenuFacade.selectFormat(format);
+    this._editorFacade.reloadEditor();
   }
 }

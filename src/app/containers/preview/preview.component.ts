@@ -1,11 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy, ElementRef } from '@angular/core';
-import { EditorStoreService } from 'stores';
-import { switchMap, distinctUntilChanged, catchError, filter, take, tap, map, delay, debounceTime } from 'rxjs/operators';
-import { FormatData } from 'models';
-import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, Subscription, throwError, Observer, empty } from 'rxjs';
-import { Popup } from '@core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Component, OnInit, ChangeDetectionStrategy, ElementRef, ɵSafeHtml } from '@angular/core';
+import { Observable } from 'rxjs';
 import { EditorFacade } from 'facades';
 import { PreviewFacade } from './../../facades/preview.facade';
 
@@ -17,7 +11,7 @@ import { PreviewFacade } from './../../facades/preview.facade';
 })
 export class PreviewComponent implements OnInit
 {
-  public layout$: Observable<SafeHtml>;
+  public layout$: Observable<ɵSafeHtml>;
 
 
   constructor(
