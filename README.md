@@ -13,4 +13,4 @@ Angular version 10.0.3.
 - Translation 
 - SCSS
 - Facade pattern (simplified)
-- ngx image cropper (<a href="https://github.com/Mawi137/ngx-image-cropper">link</a>)
+- ngx image cropper -FORKED- (<a href="https://github.com/Mawi137/ngx-image-cropper">link</a>)
